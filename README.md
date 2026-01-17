@@ -2,7 +2,7 @@
 
 Generate viral YouTube Shorts from longer videos using AI-powered analysis, smart context optimization, and automatic clipping.
 
-![Shorts Generator Frontend](/home/rayan-babur/.gemini/antigravity/brain/488e820a-3c3b-4326-b8db-fa3a97eecf8a/frontend_verification_1768659140899.png)
+![Shorts Generator Frontend](assets/frontend_preview.png)
 
 ## Features
 
