@@ -11,7 +11,7 @@ Generate viral YouTube Shorts from longer videos using AI-powered analysis, smar
 - 🧠 **Smart Context Optimization** - AI detects sentence breaks to ensure clips don't start mid-thought
 - 🔍 **Viral Segment Analysis** - Identifies hooks, emotional peaks, and shareable moments
 - ✂️ **Precision Clipping** - FFmpeg-based cutting with accurate timestamps
-- ⚡ **High Performance** - Powered by Gemini 1.5 Flash for speed and accuracy
+- ⚡ **High Performance** - Powered by Gemini 3 Flash for speed and accuracy
 
 ## Requirements
 
