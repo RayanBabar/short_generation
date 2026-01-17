@@ -1,12 +1,17 @@
 # YouTube Shorts Generator
 
-Generate YouTube Shorts from longer videos using AI-powered analysis and automatic clipping.
+Generate viral YouTube Shorts from longer videos using AI-powered analysis, smart context optimization, and automatic clipping.
+
+![Shorts Generator Frontend](/home/rayan-babur/.gemini/antigravity/brain/488e820a-3c3b-4326-b8db-fa3a97eecf8a/frontend_verification_1768659140899.png)
 
 ## Features
 
-- 🎙️ **Video Transcription** - Transcribe videos with speaker diarization and timestamps using Google Gemini
-- 🔍 **Shorts Identification** - AI-powered identification of viral-worthy segments
-- ✂️ **Video Clipping** - Automatically clip identified segments using FFmpeg
+- 🖥️ **Modern Frontend** - Drag & drop interface with dark mode and real-time progress
+- 🎙️ **Audio-First Processing** - Fast analysis by extracting audio before upload (reduces size by ~95%)
+- 🧠 **Smart Context Optimization** - AI detects sentence breaks to ensure clips don't start mid-thought
+- 🔍 **Viral Segment Analysis** - Identifies hooks, emotional peaks, and shareable moments
+- ✂️ **Precision Clipping** - FFmpeg-based cutting with accurate timestamps
+- ⚡ **High Performance** - Powered by Gemini 1.5 Flash for speed and accuracy
 
 ## Requirements
 
@@ -14,79 +19,52 @@ Generate YouTube Shorts from longer videos using AI-powered analysis and automat
 - FFmpeg (must be installed on system)
 - Google Gemini API key
 
-## Installation
+## Quick Start
 
-1. Install dependencies using uv:
+1. **Install dependencies:**
+   ```bash
+   uv sync
+   ```
 
-```bash
-uv sync
-```
+2. **Configure environment:**
+   ```bash
+   cp .env.example .env
+   # Add your GEMINI_API_KEY to .env
+   ```
 
-2. Create a `.env` file from the example:
+3. **Run the application:**
+   ```bash
+   uv run uvicorn app.main:app --reload
+   ```
 
-```bash
-cp .env.example .env
-```
+4. **Open the frontend:**
+   Navigate to `http://localhost:8000` in your browser.
 
-3. Add your Gemini API key to `.env`:
+## Workflow
 
-```
-GEMINI_API_KEY=your_api_key_here
-```
-
-4. Ensure FFmpeg is installed:
-
-```bash
-# Ubuntu/Debian
-sudo apt install ffmpeg
-
-# macOS
-brew install ffmpeg
-```
-
-## Running the Server
-
-```bash
-uv run uvicorn app.main:app --reload
-```
-
-The API will be available at `http://localhost:8000`
+1. **Upload Video**: Drag and drop your video file (supports large files).
+2. **Identify Shorts**: The AI analyzes the audio to find viral segments.
+3. **Context Check**: A second AI pass adjusts start times to finding natural sentence breaks.
+4. **Generate & Download**: Review the identified shorts and generate MP4 clips instantly.
 
 ## API Endpoints
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | POST | `/api/v1/videos/upload` | Upload a video file |
-| POST | `/api/v1/videos/{video_id}/transcribe` | Transcribe an uploaded video |
 | POST | `/api/v1/shorts/identify/{video_id}` | Identify potential shorts |
 | POST | `/api/v1/shorts/generate/{video_id}` | Generate short clips |
 | GET | `/api/v1/shorts/{short_id}` | Download a generated short |
-
-## Workflow
-
-```bash
-# 1. Upload video
-curl -X POST -F "file=@video.mp4" http://localhost:8000/api/v1/videos/upload
-# Returns: {"video_id": "abc123..."}
-
-# 2. Identify shorts
-curl -X POST "http://localhost:8000/api/v1/shorts/identify/abc123?max_shorts=5"
-
-# 3. Generate clips
-curl -X POST http://localhost:8000/api/v1/shorts/generate/abc123
-
-# 4. Download
-curl -O http://localhost:8000/api/v1/shorts/{short_id}
-```
 
 ## Configuration
 
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `GEMINI_API_KEY` | Google Gemini API key | Required |
-| `GEMINI_MODEL` | Gemini model to use | `gemini-2.5-flash` |
-| `MIN_SHORT_DURATION` | Minimum short duration (seconds) | `15` |
-| `MAX_SHORT_DURATION` | Maximum short duration (seconds) | `60` |
+| `GEMINI_MODEL` | Gemini model to use | `gemini-3-flash-preview` |
+| `VIDEO_FPS` | FPS for timestamp precision | `5` |
+| `MIN_SHORT_DURATION` | Min duration (seconds) | `15` |
+| `MAX_SHORT_DURATION` | Max duration (seconds) | `90` |
 
 ## License
 
