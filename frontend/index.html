@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Shorts Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">✂️</span>
+                <span class="logo-text">AI Shorts Generator</span>
+            </div>
+            <div class="header-subtitle">Transform long videos into viral YouTube Shorts</div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Upload Section -->
+            <section class="section upload-section" id="uploadSection">
+                <div class="section-header">
+                    <span class="step-badge">1</span>
+                    <h2>Upload Your Video</h2>
+                </div>
+
+                <div class="upload-zone" id="uploadZone">
+                    <div class="upload-content">
+                        <div class="upload-icon">📹</div>
+                        <h3>Drag & drop your video here</h3>
+                        <p>or click to browse</p>
+                        <div class="upload-formats">Supports MP4, MOV, AVI, MKV, WebM</div>
+                    </div>
+                    <input type="file" id="fileInput" accept="video/*" hidden>
+                </div>
+
+                <!-- Upload Progress -->
+                <div class="upload-progress hidden" id="uploadProgress">
+                    <div class="progress-info">
+                        <span class="file-name" id="fileName"></span>
+                        <span class="progress-percent" id="progressPercent">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+
+                <!-- Uploaded Video Info -->
+                <div class="video-info hidden" id="videoInfo">
+                    <div class="video-thumbnail">
+                        <video id="videoPreview" muted></video>
+                    </div>
+                    <div class="video-details">
+                        <h4 id="videoName">Video uploaded</h4>
+                        <p id="videoSize">Size: --</p>
+                        <p id="videoDuration">Ready for processing</p>
+                    </div>
+                    <button class="btn btn-secondary" id="removeVideoBtn">
+                        <span>✕</span> Remove
+                    </button>
+                </div>
+            </section>
+
+            <!-- Identify Section -->
+            <section class="section identify-section hidden" id="identifySection">
+                <div class="section-header">
+                    <span class="step-badge">2</span>
+                    <h2>Identify Viral Moments</h2>
+                </div>
+
+                <div class="identify-controls">
+                    <div class="control-group">
+                        <label for="maxShorts">Maximum shorts to find:</label>
+                        <select id="maxShorts">
+                            <option value="3">3 shorts</option>
+                            <option value="5" selected>5 shorts</option>
+                            <option value="10">10 shorts</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" id="identifyBtn">
+                        <span class="btn-icon">🔍</span>
+                        <span>Identify Shorts</span>
+                    </button>
+                </div>
+
+                <!-- Processing Status -->
+                <div class="processing-status hidden" id="processingStatus">
+                    <div class="spinner"></div>
+                    <div class="status-text">
+                        <h4 id="statusTitle">Analyzing video...</h4>
+                        <p id="statusSubtitle">This may take a few minutes</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="section results-section hidden" id="resultsSection">
+                <div class="section-header">
+                    <span class="step-badge">3</span>
+                    <h2>Identified Shorts</h2>
+                    <span class="shorts-count" id="shortsCount">0 shorts found</span>
+                </div>
+
+                <div class="video-summary hidden" id="videoSummary">
+                    <h4>📝 Video Summary</h4>
+                    <p id="summaryText"></p>
+                </div>
+
+                <div class="shorts-list" id="shortsList"></div>
+
+                <div class="generate-controls">
+                    <button class="btn btn-primary btn-large" id="generateAllBtn">
+                        <span class="btn-icon">🎬</span>
+                        <span>Generate All Shorts</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Generated Shorts Section -->
+            <section class="section generated-section hidden" id="generatedSection">
+                <div class="section-header">
+                    <span class="step-badge">✓</span>
+                    <h2>Your Shorts Are Ready!</h2>
+                </div>
+
+                <div class="generated-list" id="generatedList"></div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-secondary" id="startOverBtn">
+                        <span>↻</span> Start Over
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Powered by Gemini AI • Built with ❤️</p>
+        </footer>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+
+</html>
