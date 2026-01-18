@@ -4,7 +4,6 @@ from fastapi import Depends, HTTPException, status
 
 from app.config import Settings, get_settings
 from app.services.gemini_client import GeminiClient, get_gemini_client
-from app.services.transcription import TranscriptionService, get_transcription_service
 from app.services.shorts_identifier import (
     ShortsIdentifierService,
     get_shorts_identifier_service,
@@ -26,17 +25,6 @@ def get_gemini() -> GeminiClient:
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             detail=f"Gemini API not available: {str(e)}",
-        )
-
-
-def get_transcriber() -> TranscriptionService:
-    """Dependency for getting transcription service."""
-    try:
-        return get_transcription_service()
-    except Exception as e:
-        raise HTTPException(
-            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            detail=f"Transcription service not available: {str(e)}",
         )
 
 

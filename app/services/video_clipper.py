@@ -47,7 +47,7 @@ class VideoClipperService:
         start_time: str,
         end_time: str,
         output_path: Path,
-        use_copy: bool = True,
+        use_copy: bool = False,
     ) -> Path:
         """
         Clip a segment from a video.

@@ -1,17 +1,11 @@
-"""Video upload and transcription API routes."""
+"""Video upload API routes."""
 
 from pathlib import Path
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
+from fastapi import APIRouter, File, HTTPException, UploadFile, status
 
-from app.api.dependencies import (
-    get_transcriber,
-    validate_video_id,
-)
 from app.schemas.responses import VideoUploadResponse
-from app.schemas.transcription import TranscriptionResponse
-from app.services.transcription import TranscriptionService
 from app.services.video_clipper import get_video_clipper_service
 from app.utils.file_manager import save_upload_file, get_file_size
 
@@ -76,31 +70,3 @@ async def upload_video(
         file_size=file_size,
         duration=duration,
     )
-
-
-@router.post(
-    "/{video_id}/transcribe",
-    response_model=TranscriptionResponse,
-    summary="Transcribe an uploaded video",
-    description="Transcribe a previously uploaded video with speaker diarization and timestamps.",
-)
-async def transcribe_video(
-    video_id: str,
-    transcription_service: Annotated[TranscriptionService, Depends(get_transcriber)],
-) -> TranscriptionResponse:
-    """Transcribe an uploaded video."""
-    video_path = validate_video_id(video_id)
-
-    try:
-        transcription = transcription_service.transcribe_video(video_path)
-
-        return TranscriptionResponse(
-            video_id=video_id,
-            transcription=transcription,
-            status="completed",
-        )
-    except Exception as e:
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Transcription failed: {str(e)}",
-        )

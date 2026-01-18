@@ -62,7 +62,6 @@ Generate viral YouTube Shorts from longer videos using AI-powered analysis, smar
 |----------|-------------|---------|
 | `GEMINI_API_KEY` | Google Gemini API key | Required |
 | `GEMINI_MODEL` | Gemini model to use | `gemini-3-flash-preview` |
-| `VIDEO_FPS` | FPS for timestamp precision | `5` |
 | `MIN_SHORT_DURATION` | Min duration (seconds) | `15` |
 | `MAX_SHORT_DURATION` | Max duration (seconds) | `90` |
 

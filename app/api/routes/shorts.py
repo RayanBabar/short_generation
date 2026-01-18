@@ -33,16 +33,28 @@ _shorts_cache: dict[str, list] = {}
 )
 async def identify_shorts(
     video_id: str,
-    max_shorts: int = 5,
+    max_shorts: int | None = None,
+    min_duration: int | None = None,
+    max_duration: int | None = None,
     shorts_service: ShortsIdentifierService = Depends(get_shorts_identifier),
 ) -> ShortsIdentificationResponse:
-    """Identify potential shorts from an uploaded video."""
+    """
+    Identify potential shorts from an uploaded video.
+    
+    Args:
+        video_id: ID of the uploaded video
+        max_shorts: Maximum shorts to identify (0 or None = extract all potential shorts)
+        min_duration: Minimum duration in seconds (default: from settings)
+        max_duration: Maximum duration in seconds (default: from settings)
+    """
     video_path = validate_video_id(video_id)
 
     try:
-        analysis = shorts_service.identify_shorts_from_video(
+        analysis = await shorts_service.identify_shorts_from_video(
             video_path=video_path,
-            max_shorts=max_shorts,
+            max_shorts=max_shorts if max_shorts and max_shorts > 0 else None,
+            min_duration=min_duration,
+            max_duration=max_duration,
         )
 
         # Cache the shorts for later generation

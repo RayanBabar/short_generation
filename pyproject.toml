@@ -12,4 +12,5 @@ dependencies = [
     "pydantic-settings>=2.12.0",
     "python-dotenv>=1.2.1",
     "python-multipart>=0.0.21",
+    "rapidfuzz>=3.14.3",
 ]

@@ -19,10 +19,10 @@ class GeminiClient:
     def __init__(self):
         """Initialize the Gemini client."""
         settings = get_settings()
-        self.client = genai.Client(api_key=settings.gemini_api_key)
-        self.model = settings.gemini_model
-        self.video_fps = settings.video_fps
-        logger.info(f"Initialized Gemini client with model: {self.model}, FPS: {self.video_fps}")
+        self.settings = settings
+        self.client = genai.Client(api_key=self.settings.gemini_api_key)
+        self.model = self.settings.gemini_model
+        logger.info(f"Initialized Gemini client with model: {self.model}")
 
     def upload_file(self, file_path: Path) -> types.File:
         """

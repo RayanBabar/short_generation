@@ -18,8 +18,8 @@ class Settings(BaseSettings):
     # Gemini API Configuration
     gemini_api_key: str
     gemini_model: str = "gemini-3-flash-preview"
-    video_fps: int = 2  # Higher FPS = more precise timestamps (default: 1)
-
+    whisper_model_path: str = "medium.en"  # Can be a path or model name
+    
     # Application Settings
     upload_dir: Path = Path("./uploads")
     output_dir: Path = Path("./outputs")

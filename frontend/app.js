@@ -3,7 +3,7 @@
  * Handles video upload, shorts identification, and generation
  */
 
-const API_BASE = 'http://127.0.0.1:5000/api/v1';
+const API_BASE = 'http://127.0.0.1:8001/api/v1';
 
 // State
 let currentVideoId = null;
@@ -31,6 +31,10 @@ const elements = {
     processingStatus: document.getElementById('processingStatus'),
     statusTitle: document.getElementById('statusTitle'),
     statusSubtitle: document.getElementById('statusSubtitle'),
+    minDuration: document.getElementById('minDuration'),
+    maxDuration: document.getElementById('maxDuration'),
+    minDurationValue: document.getElementById('minDurationValue'),
+    maxDurationValue: document.getElementById('maxDurationValue'),
 
     // Results
     resultsSection: document.getElementById('resultsSection'),
@@ -45,6 +49,22 @@ const elements = {
     generatedList: document.getElementById('generatedList'),
     startOverBtn: document.getElementById('startOverBtn'),
 };
+
+// ========================================
+// Slider Handlers
+// ========================================
+
+if (elements.minDuration) {
+    elements.minDuration.addEventListener('input', (e) => {
+        elements.minDurationValue.textContent = e.target.value;
+    });
+}
+
+if (elements.maxDuration) {
+    elements.maxDuration.addEventListener('input', (e) => {
+        elements.maxDurationValue.textContent = e.target.value;
+    });
+}
 
 // ========================================
 // Upload Handlers
@@ -190,27 +210,35 @@ async function identifyShorts() {
     if (!currentVideoId) return;
 
     const maxShorts = elements.maxShorts.value;
+    const minDuration = elements.minDuration.value;
+    const maxDuration = elements.maxDuration.value;
 
     // Show processing
     elements.identifyBtn.disabled = true;
     elements.processingStatus.classList.remove('hidden');
-    elements.statusTitle.textContent = 'Extracting audio...';
-    elements.statusSubtitle.textContent = 'Step 1 of 4';
+    elements.statusTitle.textContent = 'Transcribing audio with Whisper...';
+    elements.statusSubtitle.textContent = 'Step 1 of 3';
 
     try {
         // Simulate step updates
         setTimeout(() => {
-            elements.statusTitle.textContent = 'Uploading to AI...';
-            elements.statusSubtitle.textContent = 'Step 2 of 4';
-        }, 2000);
-
-        setTimeout(() => {
-            elements.statusTitle.textContent = 'Analyzing for viral moments...';
-            elements.statusSubtitle.textContent = 'Step 3 of 4';
+            elements.statusTitle.textContent = 'Analyzing for viral moments with Gemini...';
+            elements.statusSubtitle.textContent = 'Step 2 of 3';
         }, 5000);
 
+        setTimeout(() => {
+            elements.statusTitle.textContent = 'Aligning precise timestamps...';
+            elements.statusSubtitle.textContent = 'Step 3 of 3';
+        }, 10000);
+
+        // Build query params
+        const params = new URLSearchParams();
+        if (maxShorts && maxShorts !== '0') params.append('max_shorts', maxShorts);
+        if (minDuration) params.append('min_duration', minDuration);
+        if (maxDuration) params.append('max_duration', maxDuration);
+
         const response = await fetch(
-            `${API_BASE}/shorts/identify/${currentVideoId}?max_shorts=${maxShorts}`,
+            `${API_BASE}/shorts/identify/${currentVideoId}?${params.toString()}`,
             { method: 'POST' }
         );
 

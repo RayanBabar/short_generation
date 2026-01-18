@@ -33,7 +33,6 @@ async def lifespan(app: FastAPI):
     logger.info(f"📁 Upload directory: {settings.upload_dir.absolute()}")
     logger.info(f"📁 Output directory: {settings.output_dir.absolute()}")
     logger.info(f"🤖 Gemini model: {settings.gemini_model}")
-    logger.info(f"🎬 Video FPS: {settings.video_fps}")
     logger.info(f"⏱️ Short duration: {settings.min_short_duration}-{settings.max_short_duration}s")
     logger.info("=" * 60)
     logger.info("✅ API is ready!")
@@ -68,9 +67,10 @@ Generate YouTube Shorts from longer videos using AI-powered analysis.
 
 ### Technology
 
-- Google Gemini API for transcription and analysis
-- FFmpeg for video processing
-- FastAPI for the REST API
+- **Faster-Whisper** for precision local transcription
+- **Google Gemini API** for semantic analysis and virality scoring
+- **FFmpeg** for high-quality video processing
+- **FastAPI** for the REST API
     """,
     version="1.0.0",
     lifespan=lifespan,

@@ -3,28 +3,31 @@
 import re
 
 
-def parse_timestamp(timestamp: str) -> int:
+def parse_timestamp(timestamp: str) -> float:
     """
-    Parse a timestamp string (MM:SS or HH:MM:SS) to total seconds.
+    Parse a timestamp string (MM:SS or HH:MM:SS or HH:MM:SS.mmm) to total seconds.
 
     Args:
-        timestamp: Timestamp string in MM:SS or HH:MM:SS format
+        timestamp: Timestamp string in MM:SS, HH:MM:SS, or HH:MM:SS.mmm format
 
     Returns:
-        Total seconds as integer
+        Total seconds as float (for sub-second precision)
 
     Examples:
         >>> parse_timestamp("01:30")
-        90
+        90.0
         >>> parse_timestamp("01:15:30")
-        4530
+        4530.0
+        >>> parse_timestamp("00:01:01.740")
+        61.74
     """
     parts = timestamp.strip().split(":")
     if len(parts) == 2:
-        minutes, seconds = int(parts[0]), int(parts[1])
+        minutes, seconds = int(parts[0]), float(parts[1])
         return minutes * 60 + seconds
     elif len(parts) == 3:
-        hours, minutes, seconds = int(parts[0]), int(parts[1]), int(parts[2])
+        hours, minutes = int(parts[0]), int(parts[1])
+        seconds = float(parts[2])  # Handle decimal seconds like "01.740"
         return hours * 3600 + minutes * 60 + seconds
     else:
         raise ValueError(f"Invalid timestamp format: {timestamp}")
